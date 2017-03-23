@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+CLIENT_ID=SET_CLIENT_ID_HERE
+OAUTH_TOKEN=SET_OAUTH_TOKEN_HERE
+
+if [ -z "$1" ]; then
+  curl -s \
+    -H 'Accept: application/vnd.twitchtv.v5+json' \
+    -H "Client-ID: $CLIENT_ID" \
+    -H "Authorization: OAuth $OAUTH_TOKEN" \
+    -X GET 'https://api.twitch.tv/kraken/streams/followed' | \
+  ramda \
+    '.streams' \
+    'map pick-dot-paths [\channel.name, \channel.status, \game, \viewers]' \
+    'map flat' \
+    'map (rename-keys-by split(".") >> last)' \
+    -o table
+else
+  streamlink twitch.tv/$1 ${2:-best}
+fi
