@@ -48,7 +48,10 @@ An OAuth token is required to get your followed channels from Twitch API.
 4. Download `twitch` executable to somewhere in your `$PATH`
     - `curl https://raw.githubusercontent.com/raine/twitch-cli/master/twitch > ~/bin/twitch`
     - `chmod +x ~/bin/twitch`
-3. Edit `twitch` executable and set `OAUTH_TOKEN` and `CLIENT_ID` to the obtained values
+3. Edit `twitch` executable and set `OAUTH_TOKEN` and `CLIENT_ID` to the
+   obtained values
+    - Alternatively, you set `TWITCH_CLIENT_ID` and `TWITCH_OAUTH_TOKEN`
+      environment variables and leave the executable as is
 
 [streamlink]: https://streamlink.github.io
 [ramda-cli]: https://github.com/raine/ramda-cli

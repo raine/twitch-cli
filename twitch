@@ -6,10 +6,11 @@ OAUTH_TOKEN=SET_OAUTH_TOKEN_HERE
 if [ -z "$1" ]; then
   curl -s \
     -H 'Accept: application/vnd.twitchtv.v5+json' \
-    -H "Client-ID: $CLIENT_ID" \
-    -H "Authorization: OAuth $OAUTH_TOKEN" \
+    -H "Client-ID: ${TWITCH_CLIENT_ID:-$CLIENT_ID}" \
+    -H "Authorization: OAuth ${TWITCH_OAUTH_TOKEN:-$OAUTH_TOKEN}" \
     -X GET 'https://api.twitch.tv/kraken/streams/followed' | \
   ramda \
+    'tap (res) -> if res.error then console.error(res); process.exit(1)' \
     '.streams' \
     'map pick-dot-paths [\channel.name, \channel.status, \game, \viewers]' \
     'map flat' \
