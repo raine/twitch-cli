@@ -15,6 +15,7 @@ if [ -z "$1" ]; then
     'map pick-dot-paths [\channel.name, \channel.status, \game, \viewers]' \
     'map flat' \
     'map (rename-keys-by split(".") >> last)' \
+    '-> if is-empty(it) then "No one you are following is streaming right now." else it' \
     -o table
 else
   streamlink twitch.tv/$1 ${2:-best}
